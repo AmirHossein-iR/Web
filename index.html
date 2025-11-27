@@ -1,221 +1,1052 @@
-<!DOCTYPE html>
-<html lang="fa">
+<!doctype html>
+<html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Amir Heydari</title>
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700&display=swap" rel="stylesheet">
-<style>
-:root{
-  --bg:#0d0d0d; --card:#1a1a1a; --accent:#00c6ff; --text:#eee; --btn:#00c6ff;
-  --calc-bg:#151823; --note-bg:rgba(255,255,255,0.05);
-}
-body.light{
-  --bg:#f0f0f0; --card:#fff; --accent:#0072ff; --text:#111; --btn:#0072ff;
-  --calc-bg:#e3e3e3; --note-bg:rgba(0,0,0,0.05);
-}
-body{
-  margin:0;font-family:'Vazirmatn',sans-serif;
-  background:linear-gradient(120deg,#0d0d0d,#1a1a1a,#101820);
-  color:var(--text);transition:.4s;scroll-behavior:smooth;
-  background-size:400% 400%;animation:bgWave 20s ease infinite;
-}
-@keyframes bgWave{
-  0%{background-position:0 0;}
-  50%{background-position:400% 400%;}
-  100%{background-position:0 0;}
-}
-main{max-width:900px;margin:0 auto;padding:20px;display:flex;flex-direction:column;gap:20px;align-items:center;}
-header, section{width:100%;border-radius:14px;padding:20px;box-shadow:0 8px 20px rgba(0,0,0,0.3);text-align:center;transition:all .6s ease-out;background:var(--card);}
-.avatar{width:100px;height:100px;border-radius:50%;object-fit:cover;border:3px solid var(--accent);box-shadow:0 4px 15px rgba(0,198,255,0.15);}
-h1{color:var(--accent);}
-p.lead{color:inherit;margin-top:0;}
-.projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:10px;}
-.project-card{background:var(--card);border-radius:12px;display:flex;flex-direction:column;min-height:180px;transition:transform .3s,box-shadow .3s;padding-bottom:10px;position:relative;}
-.project-card:hover{transform:translateY(-6px);box-shadow:0 12px 30px rgba(0,198,255,0.3);}
-.project-thumb{width:100%;height:120px;background:#111;background-size:cover;background-position:center;}
-.project-body{padding:10px;display:flex;flex-direction:column;gap:6px;flex:1;}
-.project-body h3{color:var(--accent);margin:0;font-size:1rem;}
-.project-body p{margin:0;color:inherit;font-size:0.9rem;flex:1;}
-.project-actions{display:flex;gap:6px;margin-top:6px;}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:8px;border:none;cursor:pointer;text-decoration:none;color:#fff;background:var(--btn);transition:all .15s;}
-.btn:active{transform:scale(.97);}
-.socials{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;}
-.socials a{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:var(--btn);color:#fff;text-decoration:none;font-weight:600;}
-#themeSwitch{position:fixed;top:14px;left:14px;padding:6px 12px;border-radius:8px;border:none;cursor:pointer;background:var(--btn);color:#fff;z-index:999;transition:.3s;}
-#clock{position:fixed;top:14px;right:14px;font-weight:700;background:var(--btn);padding:6px 12px;border-radius:8px;color:#fff;transition:.3s;}
-#calculator .calculator, #notes .notes-app{max-width:320px;width:100%;margin:12px auto;}
-.display{background:var(--calc-bg);border-radius:10px;padding:12px;text-align:right;font-size:1.5rem;color:#fff;margin-bottom:10px;overflow:auto;box-shadow:0 0 15px rgba(0,198,255,0.4);}
-.keys{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:50px;gap:8px;}
-.key{padding:10px;border-radius:10px;border:none;background:var(--calc-bg);color:#fff;font-size:0.95rem;cursor:pointer;transition:all .15s;position:relative;overflow:hidden;}
-.key:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,198,255,0.4);}
-.key.operator{background:linear-gradient(145deg,#ff416c,#ff4b2b);}
-.key.equal{background:var(--btn);}
-.key.func{background:linear-gradient(145deg,#f7b733,#f7971e);color:#111;}
-.particle{position:absolute;border-radius:50%;pointer-events:none;animation:explode 1s forwards;}
-@keyframes explode{0%{transform:translate(0,0) scale(1);opacity:1;}100%{transform:translate(var(--x), var(--y)) scale(0);opacity:0;}}
-.note-input{display:flex;gap:6px;}
-.note-input input{flex:1;padding:8px;border-radius:8px;border:none;background:var(--note-bg);color:var(--text);font-size:0.85rem;}
-.note-input button{padding:6px 10px;border-radius:8px;border:none;background:var(--btn);color:#fff;cursor:pointer;}
-.notes-list{display:flex;flex-direction:column;gap:8px;margin-top:4px;}
-.note{display:flex;justify-content:space-between;align-items:center;padding:6px 8px;border-radius:8px;background:var(--note-bg);}
-#backToTop{position:fixed;bottom:14px;left:14px;width:44px;height:44px;border-radius:50%;background:var(--btn);color:#012;display:none;align-items:center;justify-content:center;border:none;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,0.4);transition:.3s;}
-#backToTop:hover{transform:scale(1.05);}
-.skill-item{margin-bottom:12px;text-align:right;}
-.skill-item p{margin:0 0 4px 0;font-weight:600;}
-.skill-bar{height:12px;border-radius:6px;background:rgba(255,255,255,0.1);overflow:hidden;}
-.skill-fill{height:100%;border-radius:6px;background:var(--accent);width:0%;transition:width 1.2s;}
-@media(max-width:700px){header,section{padding:12px;}.avatar{width:88px;height:88px;}.display{font-size:1.3rem;}.keys{grid-auto-rows:45px;}.note-input input{font-size:0.8rem;}}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Q TEXT</title>
+  <style>
+    :root{
+      --bg: #0f1724;
+      --card: #0b1220;
+      --accent: #06b6d4;
+      --muted: #94a3b8;
+      --text: #e6eef7;
+      --glass: rgba(255,255,255,0.03);
+      --radius: 12px;
+    }
+    *{box-sizing:border-box}
+    body{
+      font-family: "Vazirmatn", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      margin:0;
+      background: linear-gradient(180deg,#071021 0%, #081022 60%);
+      color:var(--text);
+      padding:24px;
+      min-height:100vh;
+      -webkit-font-smoothing:antialiased;
+    }
+    .wrap{
+      max-width:1200px;
+      margin:0 auto;
+      display:grid;
+      grid-template-columns: 420px 1fr;
+      gap:20px;
+      align-items:start;
+    }
+    header{
+      grid-column:1/-1;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:6px;
+    }
+    header h1{margin:0;font-size:18px}
+    header p{margin:0;color:var(--muted);font-size:13px}
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:var(--radius);
+      padding:16px;
+      box-shadow: 0 6px 20px rgba(2,6,23,0.6);
+      border:1px solid rgba(255,255,255,0.03);
+    }
+
+    /* left column (controls) */
+    .controls{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      position:sticky;
+      top:20px;
+      height: calc(100vh - 48px);
+      overflow:auto;
+      padding-right:4px;
+    }
+    label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+    input[type="text"], input[type="number"], textarea, select{
+      width:100%;
+      padding:10px 12px;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,0.03);
+      background:var(--glass);
+      color:var(--text);
+      outline:none;
+      font-size:14px;
+    }
+    textarea{min-height:110px; resize:vertical}
+    .row{display:flex;gap:8px}
+    .row .col{flex:1}
+    .small{font-size:12px;color:var(--muted);margin-top:6px}
+
+    button{
+      background:var(--accent);
+      color:#04232b;
+      border:none;
+      padding:10px 14px;
+      border-radius:10px;
+      font-weight:600;
+      cursor:pointer;
+    }
+    .ghost{
+      background:transparent;
+      border:1px solid rgba(255,255,255,0.06);
+      color:var(--text);
+    }
+
+    /* preview */
+    .preview-area{
+      display:flex;
+      gap:14px;
+      align-items:flex-start;
+    }
+    .preview{
+      min-height:420px;
+      min-width:420px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-direction:column;
+      gap:10px;
+    }
+    .qr-wrap{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      padding:18px;
+      border-radius:14px;
+      display:inline-block;
+    }
+    .meta{
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    /* history */
+    .history{
+      margin-top:12px;
+      max-height:180px;
+      overflow:auto;
+      padding:8px;
+      border-radius:10px;
+      background:rgba(255,255,255,0.015);
+      border:1px solid rgba(255,255,255,0.02);
+    }
+    .hist-item{
+      display:flex;
+      justify-content:space-between;
+      gap:8px;
+      padding:8px;
+      border-radius:8px;
+      align-items:center;
+      font-size:13px;
+    }
+    .hist-item:hover{background:rgba(255,255,255,0.014)}
+
+    footer{grid-column:1/-1;margin-top:16px;color:var(--muted);font-size:13px;text-align:center}
+    /* responsive */
+    @media (max-width:980px){
+      .wrap{grid-template-columns:1fr; padding-bottom:40px}
+      .controls{position:static;height:auto}
+      .preview{min-width:unset}
+    }
+  </style>
 </head>
-<body class="dark">
-<button id="themeSwitch">تغییر تم</button>
-<div id="clock"></div>
-<main>
-<header id="topHeader">
-<img class="avatar" src="Aks.png" alt="عکس پروفایل">
-<h1>سلام 👋 من امیرم</h1>
-<p class="lead">یک برنامه نویس تازه کار به دنبال یادگیری بیشتر</p>
-</header>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>سلام, به Q TEXT خوش امدید</h1>
+        <p>متن، URL، Wi-Fi، vCard، SMS، تلفن و… را وارد کنید و تنظیمات را تغییر دهید — دانلود PNG/SVG، لوگو وسط، تاریخچه و تولید گروهی وجود دارد.</p>
+      </div>
+      <div style="text-align:left">
+        <small class="meta">نسخه: ۱.۰ • ساخته‌شده توسط امیرحسین حیدری</small>
+      </div>
+    </header>
 
-<section id="skills">
-<h2>مهارت‌ها</h2>
-<div class="skill-item"><p>HTML</p><div class="skill-bar"><div class="skill-fill" style="width:60%"></div></div></div>
-<div class="skill-item"><p>CSS</p><div class="skill-bar"><div class="skill-fill" style="width:73%"></div></div></div>
-<div class="skill-item"><p>JavaScript</p><div class="skill-bar"><div class="skill-fill" style="width:70%"></div></div></div>
-<div class="skill-item"><p>Python</p><div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div></div>
-<div class="skill-item"><p>PHP</p><div class="skill-bar"><div class="skill-fill" style="width:50%"></div></div></div>
-</section>
+    <!-- controls -->
+    <section class="card controls">
+      <div>
+        <label>نوع داده</label>
+        <select id="type">
+          <option value="text">متن معمولی</option>
+          <option value="url">آدرس وب (URL)</option>
+          <option value="tel">تلفن</option>
+          <option value="sms">پیامک (SMS)</option>
+          <option value="email">ایمیل</option>
+          <option value="wifi">Wi-Fi</option>
+          <option value="vcard">vCard (تماس)</option>
+          <option value="geo">موقعیت جغرافیایی</option>
+          <option value="bitcoin">آدرس بیت‌کوین/بلاک‌چین</option>
+        </select>
+      </div>
 
-<section id="projects">
-<h2>پروژه‌ها</h2>
-<div class="projects">
-<div class="project-card">
-<div class="project-thumb" style="background-color:#0a0a0a"></div>
-<div class="project-body">
-<h3>ماشین حساب مدرن</h3>
-<p>HTML + CSS + JS</p>
-<div class="project-actions"><a href="#calculator" class="btn" data-target="calculator">مشاهده</a></div>
-</div></div>
-<div class="project-card">
-<div class="project-thumb" style="background-color:#0a0a0a"></div>
-<div class="project-body">
-<h3>اپ یادداشت</h3>
-<p>ذخیره یادداشت‌ها با رابط کاربری مدرن</p>
-<div class="project-actions"><a href="#notes" class="btn" data-target="notes">مشاهده</a></div>
-</div></div>
-</div></section>
+      <div id="field-area">
+        <div id="field-text">
+          <label>متن / ورودی</label>
+          <textarea id="text" placeholder="متن یا URL را اینجا قرار دهید — برای تولید گروهی، هر سطر یک کیوآر."></textarea>
+          <div class="small">برای تولید گروهی: هر سطر یک QR جدید تولید می‌شود (دکمهٔ «تولید/تولید گروهی» را بزنید).</div>
+        </div>
 
-<section id="contact">
-<h2>راه‌های ارتباط</h2>
-<div class="socials">
-<a href="https://t.me/Anssellll" target="_blank">تلگرام</a>
-<a href="https://instagram.com/amir._.hdi" target="_blank">اینستاگرام</a>
-</div></section>
+        <!-- extra dynamic inputs -->
+        <div id="field-url" style="display:none">
+          <label>آدرس وب (URL)</label>
+          <input id="url" type="text" placeholder="https://example.com" />
+        </div>
 
-<section id="calculator">
-<h2>ماشین حساب</h2>
-<div class="calculator">
-<div id="calcDisplay" class="display">0</div>
-<div class="keys">
-<button class="key func" data-key="C">C</button>
-<button class="key func" data-key="+/-">+/-</button>
-<button class="key func" data-key="%">%</button>
-<button class="key operator" data-key="/">÷</button>
-<button class="key" data-key="7">7</button>
-<button class="key" data-key="8">8</button>
-<button class="key" data-key="9">9</button>
-<button class="key operator" data-key="*">×</button>
-<button class="key" data-key="4">4</button>
-<button class="key" data-key="5">5</button>
-<button class="key" data-key="6">6</button>
-<button class="key operator" data-key="-">-</button>
-<button class="key" data-key="1">1</button>
-<button class="key" data-key="2">2</button>
-<button class="key" data-key="3">3</button>
-<button class="key operator" data-key="+">+</button>
-<button class="key" style="grid-column:span 2" data-key="0">0</button>
-<button class="key" data-key=".">.</button>
-<button class="key equal" data-key="=">=</button>
-</div>
-</div>
-</section>
+        <div id="field-tel" style="display:none">
+          <label>شماره تلفن</label>
+          <input id="tel" type="text" placeholder="+98..." />
+        </div>
 
-<section id="notes">
-<h2>اپلیکیشن یادداشت</h2>
-<div class="notes-app">
-<div class="note-input">
-<input id="noteText" placeholder="یادداشت خود را وارد کنید...">
-<button id="addNoteBtn">افزودن</button>
-</div>
-<div id="notesList" class="notes-list"></div>
-</div>
-</section>
-</main>
+        <div id="field-sms" style="display:none">
+          <label>SMS — شماره و متن</label>
+          <div class="row">
+            <div class="col"><input id="sms-to" type="text" placeholder="شماره گیرنده" /></div>
+            <div class="col"><input id="sms-body" type="text" placeholder="متن پیام" /></div>
+          </div>
+        </div>
 
-<button id="backToTop">↑</button>
-<footer style="text-align:center;padding:12px;color:#9ba3af;">© 2025 ساخته شده با ❤️ توسط امیر</footer>
+        <div id="field-email" style="display:none">
+          <label>ایمیل — آدرس، موضوع، متن</label>
+          <input id="email-to" type="text" placeholder="to@example.com" />
+          <input id="email-subject" type="text" placeholder="موضوع" style="margin-top:8px"/>
+          <input id="email-body" type="text" placeholder="متن ایمیل" style="margin-top:8px"/>
+        </div>
 
-<script>
-// theme switch
-const themeBtn=document.getElementById('themeSwitch');
-themeBtn.addEventListener('click',()=>{document.body.classList.toggle('light');document.body.classList.toggle('dark');});
-// clock
-function updateClock(){const c=document.getElementById('clock');let t=new Date();c.textContent=t.toLocaleTimeString();}
-setInterval(updateClock,1000);updateClock();
-// projects scroll
-document.querySelectorAll('.project-actions .btn').forEach(btn=>{
-btn.addEventListener('click',e=>{
-e.preventDefault();
-document.querySelector('#'+btn.dataset.target).scrollIntoView({behavior:'smooth'});
-});
-});
-// back to top
-const backBtn=document.getElementById('backToTop');
-window.addEventListener('scroll',()=>{
-  backBtn.style.display=window.scrollY>180?'flex':'none';
-});
-// calculator
-const calcDisplay=document.getElementById('calcDisplay');let calcInput='';
-document.querySelectorAll('#calculator .key').forEach(k=>{k.addEventListener('click',()=>{handleCalc(k.dataset.key)});});
-function handleCalc(v){if(v==='C'){calcInput='';updateDisplay();return;}if(v==='+/-'){if(calcInput){calcInput=calcInput.startsWith('-')?calcInput.slice(1):'-'+calcInput;updateDisplay();}return;}if(v==='='){try{calcInput=eval(calcInput).toString();updateDisplay();}catch{calcInput='خطا';updateDisplay();calcInput='';}return;}calcInput+=v;updateDisplay();}
-function updateDisplay(){calcDisplay.textContent=calcInput||'0';}
-// notes
-const noteText=document.getElementById('noteText');
-const addNoteBtn=document.getElementById('addNoteBtn');
-const notesList=document.getElementById('notesList');
-addNoteBtn.addEventListener('click',()=>{
-  const text=noteText.value.trim();if(!text) return;
-  const note=document.createElement('div');
-  note.className='note';
-  note.innerHTML=`<span>${text}</span><button onclick="this.parentElement.remove()">حذف</button>`;
-  notesList.appendChild(note);noteText.value='';
-});
-// animate skill bars
-function animateSkills(){
-  document.querySelectorAll('.skill-fill').forEach(fill=>{
-    fill.style.width=fill.style.width; // trigger transition
-  });
-}
-window.addEventListener('scroll',()=>{
-  const skillsTop=document.getElementById('skills').offsetTop;
-  if(window.scrollY+window.innerHeight > skillsTop + 50){
-    animateSkills();
-  }
-});
-// hide theme & clock on scroll
-let lastScroll=0;
-window.addEventListener('scroll',()=>{
-  const themeClock=[themeBtn,document.getElementById('clock')];
-  let currentScroll=window.scrollY;
-  themeClock.forEach(el=>{
-    el.style.opacity=currentScroll>lastScroll?0:'1';
-    el.style.pointerEvents=currentScroll>lastScroll?'none':'auto';
-  });
-  lastScroll=currentScroll;
-});
-// back to top
-backBtn.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
-</script>
+        <div id="field-wifi" style="display:none">
+          <label>Wi-Fi — SSID، نوع رمزگذاری و رمز</label>
+          <input id="wifi-ssid" type="text" placeholder="SSID" />
+          <select id="wifi-auth" style="margin-top:8px">
+            <option value="WPA">WPA/WPA2</option>
+            <option value="WEP">WEP</option>
+            <option value="nopass">بدون رمز</option>
+          </select>
+          <input id="wifi-pass" type="text" placeholder="رمز عبور (اگر لازم است)" style="margin-top:8px"/>
+          <div class="small">فرمت: WIFI:T:WPA;S:ssid;P:password;;</div>
+        </div>
+
+        <div id="field-vcard" style="display:none">
+          <label>vCard — نام، شرکت، موبایل، ایمیل، آدرس</label>
+          <input id="v-name" type="text" placeholder="نام کامل" />
+          <input id="v-org" type="text" placeholder="شرکت" style="margin-top:8px"/>
+          <input id="v-tel" type="text" placeholder="شماره موبایل" style="margin-top:8px"/>
+          <input id="v-email" type="text" placeholder="ایمیل" style="margin-top:8px"/>
+          <input id="v-adr" type="text" placeholder="آدرس" style="margin-top:8px"/>
+        </div>
+
+        <div id="field-geo" style="display:none">
+          <label>مختصات جغرافیایی (عرض، طول)</label>
+          <div class="row">
+            <div class="col"><input id="geo-lat" type="text" placeholder="latitude (مثلاً 35.6892)"/></div>
+            <div class="col"><input id="geo-lng" type="text" placeholder="longitude (مثلاً 51.3890)"/></div>
+          </div>
+        </div>
+
+        <div id="field-bitcoin" style="display:none">
+          <label>آدرس کیف پول / مبلغ / توضیح</label>
+          <input id="btc-address" type="text" placeholder="bitcoin address"/>
+          <input id="btc-amount" type="text" placeholder="amount (اختیاری)" style="margin-top:8px"/>
+          <input id="btc-desc" type="text" placeholder="توضیح (اختیاری)" style="margin-top:8px"/>
+        </div>
+      </div>
+
+      <hr style="border:none;border-top:1px solid rgba(255,255,255,0.03);margin:8px 0">
+
+      <div>
+        <label>تنظیمات گرافیکی</label>
+        <div class="row">
+          <div class="col">
+            <label>اندازه (px)</label>
+            <input id="size" type="number" value="420" min="64" max="2000"/>
+          </div>
+          <div class="col">
+            <label>حاشیه (modules)</label>
+            <input id="margin" type="number" value="2" min="0" max="20"/>
+          </div>
+        </div>
+        <div class="row" style="margin-top:8px">
+          <div class="col">
+            <label>سطح تصحیح خطا</label>
+            <select id="ecLevel">
+              <option value="L">L ~ 7%</option>
+              <option value="M" selected>M ~ 15%</option>
+              <option value="Q">Q ~ 25%</option>
+              <option value="H">H ~ 30%</option>
+            </select>
+          </div>
+          <div class="col">
+            <label>نوع خروجی</label>
+            <select id="outputType">
+              <option value="canvas" selected>PNG (Canvas)</option>
+              <option value="svg">SVG</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row" style="margin-top:8px">
+          <div class="col">
+            <label>رنگ ماژول (قرار)</label>
+            <input id="color" type="color" value="#08192a" />
+          </div>
+          <div class="col">
+            <label>رنگ پس‌زمینه</label>
+            <input id="bgColor" type="color" value="#ffffff">
+          </div>
+        </div>
+
+        <div style="margin-top:8px">
+          <label>لوگو / تصویر در وسط (اختیاری)</label>
+          <input id="logo-file" type="file" accept="image/*" />
+          <div class="small">تصویر آپلود شده به صورت مرکز بر روی QR کشیده می‌شود. بهتر است PNG با شفافیت باشد. حداکثر اندازهٔ لوگو قابل تنظیم است.</div>
+          <div class="row" style="margin-top:8px">
+            <div class="col">
+              <label>عرض لوگو (نسبت به اندازهٔ QR)</label>
+              <input id="logo-size" type="number" value="20" min="5" max="60"/>
+            </div>
+            <div class="col">
+              <label>شکل لوگو</label>
+              <select id="logo-shape">
+                <option value="square" selected>مستطیل/مربع</option>
+                <option value="circle">دایره</option>
+                <option value="rounded">حاشیه نرم</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr style="border:none;border-top:1px solid rgba(255,255,255,0.03);margin:8px 0">
+
+      <div>
+        <label>گزینه‌ها</label>
+        <div class="row">
+          <div class="col">
+            <label><input id="use-transparent" type="checkbox" /> پس‌زمینهٔ شفاف (PNG)</label>
+          </div>
+          <div class="col">
+            <label><input id="rounded" type="checkbox" /> ماژول‌های گرد</label>
+          </div>
+        </div>
+        <div class="row" style="margin-top:8px">
+          <div class="col">
+            <button id="generate">تولید / تولید گروهی</button>
+          </div>
+          <div class="col">
+            <button id="download" class="ghost">دانلود</button>
+          </div>
+        </div>
+
+        <div class="row" style="margin-top:8px">
+          <div class="col"><button id="copy" class="ghost">کپی تصویر</button></div>
+          <div class="col"><button id="clear-history" class="ghost">پاک کردن تاریخچه</button></div>
+        </div>
+      </div>
+
+      <hr style="border:none;border-top:1px solid rgba(255,255,255,0.03);margin:8px 0">
+
+      <div>
+        <label>تاریخچهٔ تولید</label>
+        <div class="history" id="history"></div>
+      </div>
+
+      <div style="margin-top:10px">
+        <label>تنظیمات ذخیره‌شده</label>
+        <div class="row">
+          <div class="col"><button id="save-settings" class="ghost">ذخیرهٔ تنظیمات</button></div>
+          <div class="col"><button id="load-settings" class="ghost">بارگذاری تنظیمات</button></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- preview and outputs -->
+    <section class="card preview-area">
+      <div class="preview">
+        <div class="qr-wrap" id="qr-wrap">
+          <!-- QR will be inserted here -->
+          <canvas id="qr-canvas" style="display:none"></canvas>
+          <div id="qr-svg-container"></div>
+        </div>
+
+        <div class="meta" id="meta">وضعیت: آماده</div>
+
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <button id="download-png">دانلود PNG</button>
+          <button id="download-svg" class="ghost">دانلود SVG</button>
+        </div>
+
+      <aside style="flex:1">
+        <div class="card" style="padding:12px;">
+          <h3 style="margin-top:0">راهنما و نکات</h3>
+          <ul style="color:var(--muted);font-size:13px">
+            <li>برای تولید گروهی هر سطر از textarea یک QR جدید تولید می‌کند و در تاریخچه ذخیره می‌شود.</li>
+            <li>اگر لوگو اضافه کنید، کتابخانه سعی می‌کند لوگو را در وسط قرار دهد — برای خوانایی بهتر سطح تصحیح خطا را افزایش دهید (Q یا H).</li>
+            <li>برای خروجی SVG از دکمهٔ SVG استفاده کنید. SVG اندازه‌پذیر است و مناسب پرینت است.</li>
+            <li>گزینهٔ شفاف مناسب برای استفاده روی پس‌زمینه‌های دلخواه است.</li>
+          </ul>
+        </div>
+
+        <div class="card" style="margin-top:12px;padding:12px;">
+          <h3 style="margin-top:0">نمونه‌ها</h3>
+          <div style="color:var(--muted);font-size:13px">
+            URL: https://example.com<br>
+            Wi-Fi: SSID: MyNet, PASS: 12345678, T:WPA<br>
+            vCard: نام، ایمیل، تلفن و آدرس را پر کنید
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px;padding:12px;">
+          <h3 style="margin-top:0">راه های ارتباط</h3>
+          <div style="color:var(--muted);font-size:13px">
+          <a href="https://t.me/Anssellll" target="_blank"
+             style="display:inline-block; background:#0000ff; color:white; padding:8px 16px;
+                    border-radius:6px; text-decoration:none; cursor:pointer;">
+          تلگرام
+          </a>
+
+          <a href="https://t.me/AmirH_Channel" target="_blank"
+             style="display:inline-block; background:#0000ff; color:white; padding:8px 16px;
+                    border-radius:6px; text-decoration:none; cursor:pointer;">
+           چنل تلگرام
+          </a>
+
+          <a href="https://instagram.com/amir._.hdi" target="_blank"
+             style="display:inline-block; background:#ff0000; color:white; padding:8px 16px;
+                    border-radius:6px; text-decoration:none; cursor:pointer;">
+          اینستاگرام
+          </a>
+
+          <a href="https://wa.me/09382246900" target="_blank"
+             style="display:inline-block; background:#00782c; color:white; padding:8px 16px;
+                    border-radius:6px; text-decoration:none; cursor:pointer;">
+          واتساپ
+          </a>
+
+        </div>
+      </aside>
+
+    </section>
+
+
+  <!-- استفاده از کتابخانه qrcode (toDataURL و toString برای SVG). CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+
+  <script>
+    // Helper: Persian-friendly logging to meta
+    const metaEl = document.getElementById('meta');
+    function setMeta(txt){ metaEl.textContent = 'وضعیت: ' + txt; }
+
+    // DOM refs
+    const typeEl = document.getElementById('type');
+    const fieldArea = document.getElementById('field-area');
+    const textEl = document.getElementById('text');
+    const sizeEl = document.getElementById('size');
+    const marginEl = document.getElementById('margin');
+    const ecEl = document.getElementById('ecLevel');
+    const outputTypeEl = document.getElementById('outputType');
+    const colorEl = document.getElementById('color');
+    const bgColorEl = document.getElementById('bgColor');
+    const roundedEl = document.getElementById('rounded');
+    const transparentEl = document.getElementById('use-transparent');
+    const generateBtn = document.getElementById('generate');
+    const downloadBtn = document.getElementById('download');
+    const downloadPngBtn = document.getElementById('download-png');
+    const downloadSvgBtn = document.getElementById('download-svg');
+    const copyBtn = document.getElementById('copy');
+    const historyEl = document.getElementById('history');
+    const clearHistoryBtn = document.getElementById('clear-history');
+    const saveSettingsBtn = document.getElementById('save-settings');
+    const loadSettingsBtn = document.getElementById('load-settings');
+    const logoFileEl = document.getElementById('logo-file');
+    const logoSizeEl = document.getElementById('logo-size');
+    const logoShapeEl = document.getElementById('logo-shape');
+    const qrWrap = document.getElementById('qr-wrap');
+    const qrCanvas = document.getElementById('qr-canvas');
+    const qrSvgContainer = document.getElementById('qr-svg-container');
+
+    // other field refs
+    const urlEl = document.getElementById('url');
+    const telEl = document.getElementById('tel');
+    const smsTo = document.getElementById('sms-to');
+    const smsBody = document.getElementById('sms-body');
+    const emailTo = document.getElementById('email-to');
+    const emailSub = document.getElementById('email-subject');
+    const emailBody = document.getElementById('email-body');
+    const wifiSsid = document.getElementById('wifi-ssid');
+    const wifiAuth = document.getElementById('wifi-auth');
+    const wifiPass = document.getElementById('wifi-pass');
+
+    const vName = document.getElementById('v-name');
+    const vOrg = document.getElementById('v-org');
+    const vTel = document.getElementById('v-tel');
+    const vEmail = document.getElementById('v-email');
+    const vAdr = document.getElementById('v-adr');
+
+    const geoLat = document.getElementById('geo-lat');
+    const geoLng = document.getElementById('geo-lng');
+
+    const btcAddr = document.getElementById('btc-address');
+    const btcAmount = document.getElementById('btc-amount');
+    const btcDesc = document.getElementById('btc-desc');
+
+    // logo image object
+    let logoImage = null;
+    logoFileEl.addEventListener('change', (e)=>{
+      const f = e.target.files && e.target.files[0];
+      if(!f) { logoImage = null; return; }
+      const reader = new FileReader();
+      reader.onload = () => {
+        const img = new Image();
+        img.onload = () => { logoImage = img; setMeta('لوگو بارگذاری شد'); };
+        img.src = reader.result;
+      };
+      reader.readAsDataURL(f);
+    });
+
+    // show/hide fields based on type
+    function showFieldsForType(t){
+      const types = ['text','url','tel','sms','email','wifi','vcard','geo','bitcoin'];
+      types.forEach(x=>{
+        const el = document.getElementById('field-' + x);
+        if(el) el.style.display = (x===t || (t==='text' && x==='text')) ? '' : 'none';
+      });
+    }
+    typeEl.addEventListener('change', ()=> showFieldsForType(typeEl.value));
+    showFieldsForType(typeEl.value);
+
+    // Build payload string according to type
+    function buildDataString(singleText=null){
+      const t = typeEl.value;
+      if(t==='text'){
+        return singleText !== null ? singleText : textEl.value;
+      } else if(t==='url'){
+        const v = singleText !== null ? singleText : urlEl.value || textEl.value;
+        // auto prepend http if missing
+        if(v && !/^[a-zA-Z]+:\/\//.test(v)) return 'https://' + v;
+        return v;
+      } else if(t==='tel'){
+        const v = singleText !== null ? singleText : telEl.value || textEl.value;
+        return 'tel:' + (v || '');
+      } else if(t==='sms'){
+        const to = smsTo.value || '';
+        const body = smsBody.value || '';
+        return 'SMSTO:' + to + ':' + body;
+      } else if(t==='email'){
+        const to = emailTo.value || '';
+        const sub = emailSub.value || '';
+        const body = emailBody.value || '';
+        return 'MATMSG:TO:' + to + ';SUB:' + sub + ';BODY:' + body + ';;';
+      } else if(t==='wifi'){
+        const ssid = wifiSsid.value || '';
+        const auth = wifiAuth.value || 'WPA';
+        const pass = wifiPass.value || '';
+        return 'WIFI:T:' + auth + ';S:' + ssid + ';P:' + pass + ';;';
+      } else if(t==='vcard'){
+        const name = vName.value || '';
+        const org = vOrg.value || '';
+        const tel = vTel.value || '';
+        const email = vEmail.value || '';
+        const adr = vAdr.value || '';
+        let v = 'BEGIN:VCARD\nVERSION:3.0\n';
+        if(name) v += 'FN:' + name + '\n';
+        if(org) v += 'ORG:' + org + '\n';
+        if(tel) v += 'TEL;TYPE=CELL:' + tel + '\n';
+        if(email) v += 'EMAIL:' + email + '\n';
+        if(adr) v += 'ADR:' + adr + '\n';
+        v += 'END:VCARD';
+        return v;
+      } else if(t==='geo'){
+        const lat = geoLat.value || '';
+        const lng = geoLng.value || '';
+        return 'geo:' + lat + ',' + lng;
+      } else if(t==='bitcoin'){
+        const addr = btcAddr.value || '';
+        const amount = btcAmount.value || '';
+        const desc = btcDesc.value || '';
+        let s = 'bitcoin:' + addr;
+        const params = [];
+        if(amount) params.push('amount=' + encodeURIComponent(amount));
+        if(desc) params.push('message=' + encodeURIComponent(desc));
+        if(params.length) s += '?' + params.join('&');
+        return s;
+      }
+      return '';
+    }
+
+    // History (localStorage)
+    const HS_KEY = 'qr_history_v1';
+    function loadHistory(){
+      try{
+        const raw = localStorage.getItem(HS_KEY);
+        return raw ? JSON.parse(raw) : [];
+      }catch(e){ return []; }
+    }
+    function saveHistory(arr){
+      localStorage.setItem(HS_KEY, JSON.stringify(arr));
+      renderHistory();
+    }
+    function addHistory(item){
+      const arr = loadHistory();
+      arr.unshift(item);
+      if(arr.length>50) arr.splice(50);
+      saveHistory(arr);
+    }
+    function renderHistory(){
+      const arr = loadHistory();
+      historyEl.innerHTML = '';
+      if(arr.length===0){ historyEl.innerHTML = '<div style="color:var(--muted);padding:8px">تاریخچه خالی است.</div>'; return; }
+      arr.forEach((h, idx)=>{
+        const div = document.createElement('div');
+        div.className = 'hist-item';
+        div.innerHTML = '<div style="flex:1;word-break:break-all"><strong>'+ (h.title||'بدون عنوان') +'</strong><div style="color:var(--muted);font-size:12px;margin-top:4px">'+ (h.text.length>120 ? h.text.slice(0,120)+'…' : h.text) +'</div></div>' +
+                        '<div style="display:flex;flex-direction:column;gap:6px">'+
+                          '<button data-idx="'+idx+'" class="ghost load-btn">بارگذاری</button>' +
+                          '<button data-idx="'+idx+'" class="ghost delete-btn">حذف</button>' +
+                        '</div>';
+        historyEl.appendChild(div);
+      });
+      // attach listeners
+      historyEl.querySelectorAll('.load-btn').forEach(b=>{
+        b.addEventListener('click', (e)=>{
+          const idx = parseInt(e.target.getAttribute('data-idx'),10);
+          const arr = loadHistory();
+          const item = arr[idx];
+          if(!item) return;
+          textEl.value = item.text;
+          setMeta('بارگذاری شد از تاریخچه');
+        });
+      });
+      historyEl.querySelectorAll('.delete-btn').forEach(b=>{
+        b.addEventListener('click', (e)=>{
+          const idx = parseInt(e.target.getAttribute('data-idx'),10);
+          const arr = loadHistory();
+          arr.splice(idx,1);
+          saveHistory(arr);
+        });
+      });
+    }
+    renderHistory();
+
+    clearHistoryBtn.addEventListener('click', ()=>{
+      if(confirm('آیا از پاک کردن همهٔ تاریخچه مطمئنید؟')){ localStorage.removeItem(HS_KEY); renderHistory(); setMeta('تاریخچه پاک شد'); }
+    });
+
+    // Save/load settings
+    const SETTINGS_KEY = 'qr_settings_v1';
+    saveSettingsBtn.addEventListener('click', ()=>{
+      const settings = {
+        size:sizeEl.value, margin:marginEl.value, ec:ecEl.value, color:colorEl.value, bg:bgColorEl.value,
+        rounded:roundedEl.checked, transparent:transparentEl.checked, output:outputTypeEl.value, logoSize:logoSizeEl.value, logoShape:logoShapeEl.value
+      };
+      localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+      setMeta('تنظیمات ذخیره شد');
+    });
+    loadSettingsBtn.addEventListener('click', ()=>{
+      const raw = localStorage.getItem(SETTINGS_KEY);
+      if(!raw){ setMeta('تنظیماتی یافت نشد'); return; }
+      try{
+        const s = JSON.parse(raw);
+        sizeEl.value = s.size || sizeEl.value;
+        marginEl.value = s.margin || marginEl.value;
+        ecEl.value = s.ec || ecEl.value;
+        colorEl.value = s.color || s.color;
+        bgColorEl.value = s.bg || bgColorEl.value;
+        roundedEl.checked = !!s.rounded;
+        transparentEl.checked = !!s.transparent;
+        outputTypeEl.value = s.output || outputTypeEl.value;
+        logoSizeEl.value = s.logoSize || logoSizeEl.value;
+        logoShapeEl.value = s.logoShape || logoShapeEl.value;
+        setMeta('تنظیمات بارگذاری شد');
+      }catch(e){ setMeta('خطا در بارگذاری تنظیمات'); }
+    });
+
+    // Core generate function (single string)
+    async function generateQRForString(dataStr){
+      setMeta('در حال تولید...');
+      // prepare options
+      const size = parseInt(sizeEl.value,10) || 420;
+      const margin = parseInt(marginEl.value,10) || 2;
+      const ec = ecEl.value || 'M';
+      const color = colorEl.value || '#08192a';
+      const bg = bgColorEl.value || '#ffffff';
+      const outputType = outputTypeEl.value || 'canvas';
+      const isTransparent = transparentEl.checked;
+
+      // clear previous
+      qrWrap.querySelectorAll('svg,canvas,img').forEach(n=>n.remove());
+
+      // Use qrcode library (https://github.com/soldair/node-qrcode) included via CDN
+      // For SVG:
+      if(outputType==='svg'){
+        try{
+          const svgString = await QRCode.toString(dataStr, { type: 'svg', margin, width: size, color: { dark: color, light: isTransparent ? 'transparent' : bg }, errorCorrectionLevel: ec });
+          const wrapper = document.createElement('div');
+          wrapper.innerHTML = svgString;
+          const svg = wrapper.querySelector('svg');
+          if(!svg) throw new Error('failed svg');
+          svg.setAttribute('width', size);
+          svg.setAttribute('height', size);
+          qrSvgContainer.appendChild(svg);
+          // if logo -> draw logo above using foreignObject? simpler: add image element positioned
+          if(logoImage){
+            // place logo as an <image> overlay in SVG
+            const ns = "http://www.w3.org/2000/svg";
+            const imgEl = document.createElementNS(ns, 'image');
+            const logoW = (parseFloat(logoSizeEl.value)/100) * size;
+            const logoH = logoW;
+            imgEl.setAttributeNS(null, 'href', logoImage.src);
+            imgEl.setAttributeNS(null, 'width', logoW);
+            imgEl.setAttributeNS(null, 'height', logoH);
+            imgEl.setAttributeNS(null, 'x', (size - logoW)/2);
+            imgEl.setAttributeNS(null, 'y', (size - logoH)/2);
+            if(logoShapeEl.value === 'circle'){
+              // wrap in clipPath
+              const defs = svg.querySelector('defs') || document.createElementNS(ns,'defs');
+              const clip = document.createElementNS(ns,'clipPath');
+              const cid = 'cliplogo';
+              clip.setAttribute('id', cid);
+              const circle = document.createElementNS(ns,'circle');
+              circle.setAttribute('cx', size/2);
+              circle.setAttribute('cy', size/2);
+              circle.setAttribute('r', logoW/2);
+              clip.appendChild(circle);
+              defs.appendChild(clip);
+              svg.insertBefore(defs, svg.firstChild);
+              imgEl.setAttribute('clip-path','url(#'+cid+')');
+            }else if(logoShapeEl.value === 'rounded'){
+              // rounded rectangle via clipPath with rx
+              const defs = svg.querySelector('defs') || document.createElementNS(ns,'defs');
+              const clip = document.createElementNS(ns,'clipPath');
+              const cid = 'cliplogo';
+              clip.setAttribute('id', cid);
+              const rect = document.createElementNS(ns,'rect');
+              rect.setAttribute('x', (size - logoW)/2);
+              rect.setAttribute('y', (size - logoH)/2);
+              rect.setAttribute('width', logoW);
+              rect.setAttribute('height', logoH);
+              rect.setAttribute('rx', Math.max(4, logoW*0.12));
+              clip.appendChild(rect);
+              defs.appendChild(clip);
+              svg.insertBefore(defs, svg.firstChild);
+              imgEl.setAttribute('clip-path','url(#'+cid+')');
+            }
+            svg.appendChild(imgEl);
+          }
+
+          setMeta('SVG تولید شد');
+          return { type:'svg', el: qrSvgContainer.querySelector('svg'), data: svgString };
+        }catch(err){
+          console.error(err);
+          setMeta('خطا در تولید SVG');
+          throw err;
+        }
+      } else {
+        // Canvas/PNG path
+        try{
+          // create canvas with desired size
+          qrCanvas.width = size;
+          qrCanvas.height = size;
+          qrCanvas.style.display = 'block';
+          const ctx = qrCanvas.getContext('2d');
+
+          // background
+          if(!isTransparent){
+            ctx.fillStyle = bg;
+            ctx.fillRect(0,0,size,size);
+          } else {
+            // clear
+            ctx.clearRect(0,0,size,size);
+          }
+
+          // draw QR to an offscreen canvas using qrcode lib to render modules
+          // use QRCode.create? but the CDN library provides toCanvas
+          // We'll create a temporary canvas and let library draw on it, then manipulate for rounded modules / overlay
+          await QRCode.toCanvas(qrCanvas, dataStr, {
+            width: size,
+            margin,
+            color: { dark: color, light: isTransparent ? '#0000' : bg },
+            errorCorrectionLevel: ec
+          });
+
+          // If rounded modules requested, we will redraw rounded modules manually.
+          if(roundedEl.checked){
+            // Convert qrCanvas data to module matrix by using QRCode.create
+            // Use internal API: QRCode.create(text, options) returns object with modules
+            try{
+              const qr = QRCode.create(dataStr, { errorCorrectionLevel: ec });
+              const modules = qr.modules; // 2D boolean array
+              const moduleCount = modules.size;
+              const moduleSize = (size - 2*margin) / moduleCount;
+              // create fresh canvas
+              const c = document.createElement('canvas');
+              c.width = size; c.height = size;
+              const g = c.getContext('2d');
+              if(!isTransparent){ g.fillStyle = bg; g.fillRect(0,0,size,size); }
+              g.fillStyle = color;
+              // draw rounded squares: for each module true -> draw rounded rect
+              for(let r=0;r<moduleCount;r++){
+                for(let ccol=0; ccol<moduleCount; ccol++){
+                  if(modules.get(r, ccol)){
+                    const x = margin + ccol * moduleSize;
+                    const y = margin + r * moduleSize;
+                    // draw rounded rect
+                    const rad = moduleSize * 0.35;
+                    roundRect(g, x, y, moduleSize, moduleSize, rad, true, false);
+                  }
+                }
+              }
+              // copy result to qrCanvas
+              qrCanvas.getContext('2d').clearRect(0,0,size,size);
+              qrCanvas.getContext('2d').drawImage(c,0,0);
+            }catch(e){
+              console.warn('failed rounded fallback', e);
+            }
+          }
+
+          // Insert logo if exists
+          if(logoImage){
+            const ctx = qrCanvas.getContext('2d');
+            const logoW = (parseFloat(logoSizeEl.value)/100) * size;
+            const logoH = logoW;
+            const x = (size - logoW)/2;
+            const y = (size - logoH)/2;
+
+            // optional background for logo (white rounded rect) to improve scannability
+            ctx.save();
+            const pad = 6;
+            if(true){
+              ctx.fillStyle = '#ffffff';
+              if(logoShapeEl.value === 'circle'){
+                const cx = size/2, cy = size/2, r = logoW/2 + pad;
+                ctx.beginPath();
+                ctx.arc(cx,cy,r,0,Math.PI*2);
+                ctx.fill();
+              } else if(logoShapeEl.value === 'rounded'){
+                roundRect(ctx, x - pad/2, y - pad/2, logoW + pad, logoH + pad, Math.min(12, logoW*0.18), true, false);
+              } else {
+                ctx.fillRect(x - pad/2, y - pad/2, logoW + pad, logoH + pad);
+              }
+            }
+            // draw logo clipped shape
+            if(logoShapeEl.value === 'circle'){
+              ctx.beginPath();
+              ctx.arc(size/2, size/2, logoW/2, 0, Math.PI*2);
+              ctx.closePath();
+              ctx.clip();
+              ctx.drawImage(logoImage, x, y, logoW, logoH);
+            } else if(logoShapeEl.value === 'rounded'){
+              ctx.save();
+              roundRect(ctx, x, y, logoW, logoH, Math.max(6, logoW*0.12), true, false);
+              ctx.clip();
+              ctx.drawImage(logoImage, x, y, logoW, logoH);
+              ctx.restore();
+            } else {
+              ctx.drawImage(logoImage, x, y, logoW, logoH);
+            }
+            ctx.restore();
+          }
+
+          setMeta('PNG/Canvas تولید شد');
+          return { type:'canvas', el: qrCanvas, data: qrCanvas.toDataURL('image/png') };
+        }catch(err){
+          console.error(err);
+          setMeta('خطا در تولید PNG');
+          throw err;
+        }
+      }
+    }
+
+    // utility: rounded rect
+    function roundRect(ctx, x, y, w, h, r, fill, stroke){
+      if(typeof stroke === 'undefined'){ stroke = true; }
+      if(typeof r === 'undefined'){ r = 5; }
+      ctx.beginPath();
+      ctx.moveTo(x+r, y);
+      ctx.lineTo(x+w-r, y);
+      ctx.quadraticCurveTo(x+w, y, x+w, y+r);
+      ctx.lineTo(x+w, y+h-r);
+      ctx.quadraticCurveTo(x+w, y+h, x+w-r, y+h);
+      ctx.lineTo(x+r, y+h);
+      ctx.quadraticCurveTo(x, y+h, x, y+h-r);
+      ctx.lineTo(x, y+r);
+      ctx.quadraticCurveTo(x, y, x+r, y);
+      ctx.closePath();
+      if(fill){ ctx.fill(); }
+      if(stroke){ ctx.stroke(); }
+    }
+
+    // Generate (single or bulk)
+    generateBtn.addEventListener('click', async ()=>{
+      try{
+        const raw = textEl.value || '';
+        if(!raw.trim()){
+          // if non-text types, ask to build from fields
+          const s = buildDataString();
+          if(!s || !s.trim()){ setMeta('هیچ ورودی برای تولید یافت نشد'); return; }
+        }
+
+        // Bulk mode: if textarea and multiple lines -> generate first and store history entries for each
+        const lines = (textEl.value || '').split('\n').map(l=>l.trim()).filter(l=>l.length>0);
+        if(lines.length > 1 && typeEl.value==='text'){
+          setMeta('در حال تولید گروهی (' + lines.length + ' مورد)...');
+          const results = [];
+          for(let i=0;i<lines.length;i++){
+            const data = buildDataString(lines[i]);
+            try{
+              const res = await generateQRForString(data);
+              // save each to history
+              addHistory({ title: lines[i].slice(0,30), text: data, timestamp: Date.now() });
+              results.push(res);
+            }catch(e){
+              console.warn('item error', e);
+            }
+          }
+          setMeta('تولید گروهی انجام شد: ' + results.length + ' مورد تولید شد');
+          // show first result after bulk
+          if(results.length>0){
+            // place first into preview if not already
+          }
+          renderHistory();
+          return;
+        }
+
+        // single generate using buildDataString
+        const dataStr = buildDataString();
+        if(!dataStr || !dataStr.trim()){ setMeta('هیچ ورودی برای تولید یافت نشد'); return; }
+        const res = await generateQRForString(dataStr);
+
+        // put result in preview (already added by function). For canvas it's qrCanvas visible, for svg it's added.
+        // Add to history
+        addHistory({ title: (dataStr.length>30 ? dataStr.slice(0,30)+'…' : dataStr), text: dataStr, timestamp: Date.now() });
+        renderHistory();
+      }catch(e){
+        console.error(e);
+        setMeta('خطا در تولید: ' + (e && e.message ? e.message : 'نامشخص'));
+      }
+    });
+
+    // download buttons
+    downloadPngBtn.addEventListener('click', async ()=>{
+      try{
+        // if current output type is svg, convert to png via canvas; else use canvas
+        if(outputTypeEl.value === 'svg'){
+          // get svg element
+          const svg = qrSvgContainer.querySelector('svg');
+          if(!svg){ setMeta('SVG تولید نشده'); return; }
+          const serializer = new XMLSerializer();
+          const svgStr = serializer.serializeToString(svg);
+          const b64 = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgStr)));
+          const img = new Image();
+          img.onload = ()=>{
+            const canvas = document.createElement('canvas');
+            const size = parseInt(sizeEl.value,10) || 420;
+            canvas.width = size; canvas.height = size;
+            const ctx = canvas.getContext('2d');
+            // background
+            if(!transparentEl.checked){
+              ctx.fillStyle = bgColorEl.value || '#ffffff';
+              ctx.fillRect(0,0,size,size);
+            } else { ctx.clearRect(0,0,size,size); }
+            ctx.drawImage(img,0,0);
+            canvas.toBlob((blob)=>{
+              const a = document.createElement('a');
+              a.href = URL.createObjectURL(blob);
+              a.download = 'qrcode.png';
+              a.click();
+              URL.revokeObjectURL(a.href);
+              setMeta('PNG دانلود شد');
+            });
+          };
+          img.src = b64;
+        } else {
+          // ensure canvas exists
+          if(!qrCanvas) { setMeta('کیوآر آماده نیست'); return; }
+          qrCanvas.toBlob((blob)=>{
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'qrcode.png';
+            a.click();
+            URL.revokeObjectURL(a.href);
+            setMeta('PNG دانلود شد');
+          });
+        }
+      }catch(e){ console.error(e); setMeta('خطا در دانلود PNG'); }
+    });
+
+    // download svg raw
+    downloadSvgBtn.addEventListener('click', ()=>{
+      const svg = qrSvgContainer.querySelector('svg');
+      if(!svg){ setMeta('SVG تولید نشده'); return; }
+      const serializer = new XMLSerializer();
+      const svgStr = serializer.serializeToString(svg);
+      const blob = new Blob([svgStr], { type: 'image/svg+xml' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'qrcode.svg';
+      a.click();
+      URL.revokeObjectURL(url);
+      setMeta('SVG دانلود شد');
+    });
+
+    // download generic (based on output type)
+    downloadBtn.addEventListener('click', ()=>{
+      if(outputTypeEl.value === 'svg') downloadSvgBtn.click();
+      else downloadPngBtn.click();
+    });
+
+    // copy image to clipboard (PNG)
+    copyBtn.addEventListener('click', async ()=>{
+      try{
+        // prefer canvas; if svg convert to canvas
+        let canvas = qrCanvas;
+        if(outputTypeEl.value === 'svg'){
+          const svg = qrSvgContainer.querySelector('svg');
+          if(!svg){ setMeta('SVG آماده نیست'); return; }
+          const serializer = new XMLSerializer();
+          const svgStr = serializer.serializeToString(svg);
+          const img = new Image();
+          const b64 = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgStr)));
+          await new Promise((res, rej)=>{
+            img.onload = ()=>res();
+            img.onerror = rej;
+            img.src = b64;
+          });
+          canvas = document.createElement('canvas');
+          const size = parseInt(sizeEl.value,10) || 420;
+          canvas.width = size; canvas.height = size;
+          const ctx = canvas.getContext('2d');
+          if(!transparentEl.checked){
+            ctx.fillStyle = bgColorEl.value || '#ffffff';
+            ctx.fillRect(0,0,size,size);
+          }
+          ctx.drawImage(img,0,0);
+        }
+        if(!navigator.clipboard) { setMeta('کپی کلیپ‌بورد پشتیبانی نمی‌شود'); return; }
+        canvas.toBlob(async (blob)=>{
+          try{
+            await navigator.clipboard.write([new ClipboardItem({'image/png': blob})]);
+            setMeta('تصویر در کلیپ‌بورد کپی شد');
+          }catch(e){
+            console.error(e);
+            setMeta('کپی ناموفق');
+          }
+        });
+      }catch(e){ console.error(e); setMeta('خطا در کپی'); }
+    });
+
+    // helper to build QR from other fields quickly when pressing Enter in some inputs
+    ['url','tel','sms-to','sms-body','email-to','email-subject','email-body'].forEach(id=>{
+      const el = document.getElementById(id);
+      if(el) el.addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ generateBtn.click(); } });
+    });
+
+    // initial sample
+    textEl.value = 'سلام — کد QR تستی\nhttps://example.com\nHello QR';
+    // auto-generate first preview
+    (async ()=>{ try{ await generateBtn.click(); } catch(e){} })();
+
+    // ensure clicking history load sets fields
+    // renderHistory already attaches handlers
+
+    // Prevent default form submits (no form but just in case)
+    document.addEventListener('submit', e=> e.preventDefault());
+  </script>
 </body>
 </html>
