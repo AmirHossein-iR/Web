@@ -1,215 +1,139 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>قیمت لحظه‌ای نوبیتکس</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>قیمت لحظه‌ای ارز دیجیتال</title>
 
-    <!-- فونت وزیر -->
-    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
 
-    <!-- CSS -->
-    <style>
-        :root {
-            --bg-color: #f4f6f8;
-            --card-bg: #ffffff;
-            --text-primary: #2d3436;
-            --accent-color: #6c5ce7;
-        }
+<style>
+body {
+    font-family: Vazirmatn, sans-serif;
+    background: #f4f6f8;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
 
-        body {
-            font-family: 'Vazirmatn', sans-serif;
-            background-color: var(--bg-color);
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            padding: 20px;
-        }
+.container {
+    max-width: 900px;
+    width: 100%;
+}
 
-        .main-container {
-            width: 100%;
-            max-width: 900px;
-        }
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
 
-        header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
+.status {
+    font-size: 0.9rem;
+    margin-top: 10px;
+    color: #555;
+}
 
-        .status-box {
-            display: inline-flex;
-            align-items: center;
-            background: #fff;
-            padding: 5px 15px;
-            border-radius: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            margin-top: 15px;
-            font-size: 0.85rem;
-        }
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+}
 
-        .status-dot {
-            height: 10px;
-            width: 10px;
-            background-color: #ccc;
-            border-radius: 50%;
-            display: inline-block;
-            margin-left: 8px;
-        }
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 8px 20px rgba(0,0,0,.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-        .status-dot.active {
-            background-color: #00b894;
-            box-shadow: 0 0 5px #00b894;
-        }
+.name {
+    font-size: 1.1rem;
+}
 
-        .currency-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-        }
-
-        .currency-card {
-            background: var(--card-bg);
-            padding: 25px;
-            border-radius: 16px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 4px solid transparent;
-            transition: transform 0.3s ease;
-        }
-
-        .currency-card:hover {
-            transform: translateY(-5px);
-        }
-
-        /* رنگ بندی ارزها */
-        .card-usdt { border-bottom-color: #26de81; }
-        .card-btc  { border-bottom-color: #f7b731; }
-        .card-eth  { border-bottom-color: #4b7bec; }
-        .card-trx  { border-bottom-color: #eb3b5a; }
-
-        .currency-name h3 {
-            margin: 0;
-            font-size: 1.2rem;
-            color: var(--text-primary);
-        }
-
-        .currency-name span {
-            font-size: 0.9rem;
-            color: #b2bec3;
-            letter-spacing: 1px;
-        }
-
-        .currency-price {
-            text-align: left;
-        }
-
-        .price-value {
-            display: block;
-            font-size: 1.4rem;
-            font-weight: 800;
-            color: var(--text-primary);
-        }
-
-        .price-unit {
-            font-size: 0.8rem;
-            color: #636e72;
-        }
-    </style>
+.price {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+</style>
 </head>
 
 <body>
-    <div class="main-container">
-        <header>
-            <h1>نرخ‌های لحظه‌ای بازار (نوبیتکس)</h1>
-            <p>
-                قیمت‌ها بر اساس آخرین معاملات به
-                <span style="color:#e74c3c;font-weight:bold;">تومان</span>
-                محاسبه شده‌اند.
-            </p>
+<div class="container">
+    <header>
+        <h1>قیمت لحظه‌ای ارز دیجیتال</h1>
+        <div class="status" id="status">در حال دریافت اطلاعات...</div>
+    </header>
 
-            <div class="status-box">
-                <span id="connection-status" class="status-dot"></span>
-                <span id="last-update">در حال اتصال...</span>
-            </div>
-        </header>
+    <div class="grid" id="grid"></div>
+</div>
 
-        <div class="currency-grid" id="currency-container"></div>
-    </div>
+<script>
+const cryptos = [
+    { id: 'bitcoin', name: 'بیت‌کوین', symbol: 'BTC' },
+    { id: 'ethereum', name: 'اتریوم', symbol: 'ETH' },
+    { id: 'tether', name: 'تتر', symbol: 'USDT' },
+    { id: 'dogecoin', name: 'دوج‌کوین', symbol: 'DOGE' },
+    { id: 'tron', name: 'ترون', symbol: 'TRX' }
+];
 
-    <!-- JavaScript -->
-    <script>
-        const API_URL = 'https://corsproxy.io/?https://api.nobitex.ir/market/stats';
+const statusEl = document.getElementById('status');
+const grid = document.getElementById('grid');
 
-        const targetCurrencies = [
-            { key: 'usdt-rls', name: 'دلار (تتر)', icon: 'card-usdt' },
-            { key: 'btc-rls',  name: 'بیت‌کوین',   icon: 'card-btc' },
-            { key: 'eth-rls',  name: 'اتریوم',     icon: 'card-eth' },
-            { key: 'trx-rls',  name: 'ترون',       icon: 'card-trx' },
-            { key: 'doge-rls', name: 'دوج‌کوین',   icon: 'card-eth' }
-        ];
+async function getDollarPrice() {
+    const res = await fetch('https://call.tgju.org/ajax.json');
+    const data = await res.json();
+    return parseInt(data.price_dollar_rl.p.replace(/,/g,'')) / 10;
+}
 
-        const container = document.getElementById('currency-container');
-        const lastUpdateEl = document.getElementById('last-update');
-        const statusDot = document.getElementById('connection-status');
+async function getCryptoPrices() {
+    const ids = cryptos.map(c => c.id).join(',');
+    const res = await fetch(
+        `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd`
+    );
+    return res.json();
+}
 
-        function formatNumber(num) {
-            return new Intl.NumberFormat('fa-IR').format(num);
-        }
+async function loadData() {
+    try {
+        statusEl.textContent = 'در حال دریافت اطلاعات...';
 
-        async function fetchPrices() {
-            try {
-                statusDot.classList.remove('active');
-                lastUpdateEl.textContent = 'در حال دریافت...';
+        const dollar = await getDollarPrice();
+        const crypto = await getCryptoPrices();
 
-                const response = await fetch(API_URL);
-                if (!response.ok) throw new Error('Network error');
+        grid.innerHTML = '';
 
-                const data = await response.json();
+        cryptos.forEach(c => {
+            const toman = Math.floor(crypto[c.id].usd * dollar);
 
-                if (data.status === "ok") {
-                    updateUI(data.stats);
-                    statusDot.classList.add('active');
-                    const now = new Date();
-                    lastUpdateEl.textContent =
-                        `بروزرسانی: ${now.toLocaleTimeString('fa-IR')}`;
-                }
-            } catch (error) {
-                console.error(error);
-                lastUpdateEl.textContent = 'خطا در ارتباط با سرور';
-                lastUpdateEl.style.color = 'red';
-            }
-        }
+            const div = document.createElement('div');
+            div.className = 'card';
+            div.innerHTML = `
+                <div class="name">
+                    ${c.name}
+                    <div style="font-size:.8rem;color:#888">${c.symbol}</div>
+                </div>
+                <div class="price">
+                    ${toman.toLocaleString('fa-IR')} تومان
+                </div>
+            `;
+            grid.appendChild(div);
+        });
 
-        function updateUI(stats) {
-            container.innerHTML = '';
+        statusEl.textContent =
+            'آخرین بروزرسانی: ' + new Date().toLocaleTimeString('fa-IR');
 
-            targetCurrencies.forEach(currency => {
-                const currencyData = stats[currency.key];
-                if (!currencyData) return;
+    } catch (e) {
+        console.error(e);
+        statusEl.textContent = 'خطا در دریافت اطلاعات';
+        statusEl.style.color = 'red';
+    }
+}
 
-                const priceInTomans =
-                    Math.floor(parseFloat(currencyData.latest) / 10);
-
-                const card = document.createElement('div');
-                card.className = `currency-card ${currency.icon}`;
-                card.innerHTML = `
-                    <div class="currency-name">
-                        <h3>${currency.name}</h3>
-                        <span>${currency.key.toUpperCase().replace('-RLS','')}</span>
-                    </div>
-                    <div class="currency-price">
-                        <span class="price-value">${formatNumber(priceInTomans)}</span>
-                        <span class="price-unit">تومان</span>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        fetchPrices();
-        setInterval(fetchPrices, 20000);
-    </script>
+loadData();
+setInterval(loadData, 30000);
+</script>
 </body>
 </html>
