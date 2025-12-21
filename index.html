@@ -222,5 +222,20 @@ function showPage(id,btn){
 }
 </script>
 
+<script type="module">
+import { getAuth, signInWithEmailAndPassword } 
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+const auth = getAuth();
+
+signInWithEmailAndPassword(
+  auth,
+  "amirhoseinh555@gmail.com",
+  "AmirHossein090.ir"
+).then(()=>{
+  console.log("لاگین شدی");
+}).catch(e=>console.log(e));
+</script>
+
 </body>
 </html>
