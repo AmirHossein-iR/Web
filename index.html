@@ -113,10 +113,15 @@ button.send{background:#3b82f6;color:white;margin-top:10px}
 
 <!-- Firebase -->
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getFirestore, collection, addDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+import { getAuth, signInWithEmailAndPassword } 
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+const auth = getAuth();
+
+signInWithEmailAndPassword(auth, "amirhoseinh555@gmail.com", "AmirHossein090.ir")
+  .then(()=>console.log("لاگین شدی"))
+  .catch(e=>console.log(e));
+</script>
 
 const firebaseConfig = {
   apiKey: "AIzaSyCqVYomMrlcJlw94lcej-Ao0Md8CNWOw4w",
