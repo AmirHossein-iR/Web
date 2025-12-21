@@ -10,25 +10,22 @@
 <style>
 body{
   margin:0;
-  padding:40px 0;
+  padding:30px 0;
   background:#f2f4f7;
   direction:rtl;
   font-family:"Vazirmatn",sans-serif;
   display:flex;
   justify-content:center;
 }
-
 .container{
   width:90%;
   max-width:800px;
   background:#111827;
-  padding:30px;
-  border-radius:30px;
+  padding:25px;
+  border-radius:25px;
   color:white;
 }
-
-/* tabs */
-.tabs{display:flex;gap:10px;margin-bottom:20px;}
+.tabs{display:flex;gap:10px;margin-bottom:20px}
 .tabs button{
   flex:1;
   padding:12px;
@@ -38,12 +35,33 @@ body{
   color:white;
   cursor:pointer;
 }
-.tabs button.active{background:#3b82f6;}
-
-.page{display:none;background:#1e293b;padding:20px;border-radius:20px;}
+.tabs button.active{background:#3b82f6}
+.page{display:none;background:#1e293b;padding:20px;border-radius:20px}
 .page.active{display:block}
 
-/* posts */
+.admin{
+  background:#020617;
+  padding:15px;
+  border-radius:15px;
+  margin-bottom:20px;
+}
+textarea,input{
+  width:100%;
+  margin-top:10px;
+  padding:10px;
+  border-radius:10px;
+  border:none;
+}
+button.send{
+  background:#3b82f6;
+  color:white;
+  margin-top:10px;
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+}
+
 .post{
   background:#0f172a;
   padding:15px;
@@ -52,24 +70,13 @@ body{
 }
 .post img{width:100%;border-radius:12px;margin-top:10px}
 
-/* stories */
-.stories{display:flex;gap:10px;overflow-x:auto}
+.stories{display:flex;gap:10px;overflow-x:auto;margin-bottom:20px}
 .story img{
   width:90px;height:90px;
   border-radius:50%;
   border:3px solid #3b82f6;
   object-fit:cover;
 }
-
-/* admin */
-.admin{
-  background:#020617;
-  padding:15px;
-  border-radius:15px;
-  margin-bottom:20px;
-}
-textarea,input{width:100%;margin-top:10px;padding:10px;border-radius:10px;border:none}
-button.send{background:#3b82f6;color:white;margin-top:10px}
 </style>
 </head>
 
@@ -84,16 +91,14 @@ button.send{background:#3b82f6;color:white;margin-top:10px}
 </div>
 
 <div id="about" class="page active">
-  <p>سلام من امیرم 👋</p>
+  <p>سلام 👋 خوش اومدی به سایت من</p>
 </div>
 
 <div id="posts" class="page">
 
-  <!-- استوری -->
   <h3>استوری‌ها</h3>
   <div id="stories" class="stories"></div>
 
-  <!-- پنل ادمین -->
   <div id="adminPanel" class="admin" style="display:none">
     <h4>ارسال پست</h4>
     <textarea id="postText" placeholder="متن پست"></textarea>
@@ -105,33 +110,28 @@ button.send{background:#3b82f6;color:white;margin-top:10px}
     <button class="send" onclick="addStory()">ارسال استوری</button>
   </div>
 
-  <!-- لیست پست‌ها -->
   <div id="postsList"></div>
-
 </div>
 </div>
 
 <!-- Firebase -->
 <script type="module">
-import { getAuth, signInWithEmailAndPassword } 
-from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getFirestore, collection, addDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 
-const auth = getAuth();
-
-signInWithEmailAndPassword(auth, "amirhoseinh555@gmail.com", "AmirHossein090.ir")
-  .then(()=>console.log("لاگین شدی"))
-  .catch(e=>console.log(e));
-</script>
-
+/* 🔴 Firebase config خودت */
 const firebaseConfig = {
   apiKey: "AIzaSyCqVYomMrlcJlw94lcej-Ao0Md8CNWOw4w",
   authDomain: "site-e0f15.firebaseapp.com",
   projectId: "site-e0f15",
   storageBucket: "site-e0f15.firebasestorage.app",
-  messagingSenderId: "G-K2ZPL7C212",
+  messagingSenderId: "177456537790",
   appId: "1:177456537790:web:d1483ffdce13b32dd7feef"
 };
 
+/* 🔴 ایمیل خودت */
 const adminEmail = "amirhoseinh555@gmail.com";
 
 const app = initializeApp(firebaseConfig);
@@ -139,69 +139,75 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const storage = getStorage(app);
 
-/* auth */
+/* admin check */
 onAuthStateChanged(auth,user=>{
-  if(user && user.email===adminEmail){
-    adminPanel.style.display="block";
+  if(user && user.email === adminEmail){
+    adminPanel.style.display = "block";
   }
 });
 
-/* posts */
-async function addPost(){
-  let imageUrl="";
-  const file=postImage.files[0];
+/* add post */
+window.addPost = async function(){
+  let imageUrl = "";
+  const file = postImage.files[0];
 
   if(file){
-    const r=ref(storage,"posts/"+Date.now());
+    const r = ref(storage,"posts/"+Date.now());
     await uploadBytes(r,file);
-    imageUrl=await getDownloadURL(r);
+    imageUrl = await getDownloadURL(r);
   }
 
   await addDoc(collection(db,"posts"),{
-    text:postText.value,
+    text: postText.value,
     imageUrl,
-    createdAt:Date.now()
+    createdAt: Date.now()
   });
 
   postText.value="";
 }
 
+/* show posts */
 onSnapshot(
   query(collection(db,"posts"),orderBy("createdAt","desc")),
   snap=>{
     postsList.innerHTML="";
     snap.forEach(d=>{
       const p=d.data();
-      postsList.innerHTML+=`
+      postsList.innerHTML += `
         <div class="post">
           <p>${p.text}</p>
-          ${p.imageUrl?`<img src="${p.imageUrl}">`:""}
-        </div>`;
+          ${p.imageUrl ? `<img src="${p.imageUrl}">` : ""}
+        </div>
+      `;
     });
 });
 
-/* stories */
-async function addStory(){
-  const file=storyImage.files[0];
-  const r=ref(storage,"stories/"+Date.now());
+/* add story */
+window.addStory = async function(){
+  const file = storyImage.files[0];
+  if(!file) return;
+
+  const r = ref(storage,"stories/"+Date.now());
   await uploadBytes(r,file);
-  const url=await getDownloadURL(r);
+  const url = await getDownloadURL(r);
 
   await addDoc(collection(db,"stories"),{
-    imageUrl:url,
-    expireAt:Date.now()+86400000
+    imageUrl: url,
+    expireAt: Date.now() + 86400000
   });
 }
 
+/* show stories */
 onSnapshot(collection(db,"stories"),snap=>{
   stories.innerHTML="";
   snap.forEach(d=>{
     const s=d.data();
-    if(Date.now()<s.expireAt){
-      stories.innerHTML+=`
+    if(Date.now() < s.expireAt){
+      stories.innerHTML += `
         <div class="story">
           <img src="${s.imageUrl}">
-        </div>`;
+        </div>
+      `;
     }
   });
 });
